@@ -1,0 +1,191 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title":"Solid Challenge Documentation",
+      "description": "Node Path Chapter II - Challenge II",
+      "version":"1.0.0",
+      "contact":{
+        "email":"luckmenez@gmail.com"
+      }
+    },
+    "paths":{
+      "/users":{
+        "post":{
+          "tags": ["User"],
+          "summary":"Create an User",
+          "description":"Create a new User",
+          "requestBody": {
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type":"string"
+                    },
+                    "email": {
+                      "type":"string"
+                    }
+                  },
+                  "example": {
+                    "name": "Name example",
+                    "email": "email@email.com.br"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description":"User Already exists!"
+            }
+          }
+        },
+        "get":{
+          "tags": ["User"],
+          "summary": "List all users",
+          "description":"List all users",
+          "parameters": [{
+            "in":"header",
+            "name": "user_id",
+            "description":"make sure user is an admin",
+            "required": true,
+            "type": "string"
+          }],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json":{
+                  "schema":{
+                    "type": "array",
+                    "items": {
+                      "type":"object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "created_at": {
+                          "type": "timestamp"
+                        },
+                        "updated_at": {
+                          "type": "timestamp"
+                        },
+                        "admin": {
+                          "type": "boolean"
+                        },
+                        "name": {
+                          "type":"string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "User is not a admin"
+            }
+          }
+        }
+      },
+      "/users/{user_id}":{
+        "get":{
+          "tags":["User"],
+          "description":"Get a specific user information",
+          "parameters":[{
+            "in":"path",
+            "name": "user_id",
+            "description":"user id to search",
+            "required": true,
+            "type":"string"
+          }],
+          "responses":{
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json":{
+                  "type":"object",
+                  "properties":{
+                    "id": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "timestamp"
+                    },
+                    "updated_at": {
+                      "type": "timestamp"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type":"string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "404":{
+              "description": "User not Exists"
+            }
+          }
+        }
+      },
+      "/users/{user_id}/admin":{
+        "patch":{
+          "tags":["User"],
+          "description":"Turn an user an admin",
+          "parameters":[{
+            "in":"path",
+            "name":"user_id",
+            "description": "user id to be an admin",
+            "required": true,
+            "type":"string"
+          }],
+          "responses":{
+            "200": {
+              "description": "Success",
+              "content": {
+                "application/json":{
+                  "type":"object",
+                  "properties":{
+                    "id": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "timestamp"
+                    },
+                    "updated_at": {
+                      "type": "timestamp"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type":"string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "404":{
+              "description": "User not Exists"
+            }
+          }
+        }
+      }
+    }
+  }
